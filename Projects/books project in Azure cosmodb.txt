@@ -1,0 +1,155 @@
+    books project in Azure cosmodb
+----------------------------------------------------------
+2.[
+{
+"title": "Linux in simple way",
+"isbn": 6677,
+"downloadable": false,
+"no_of_reviews": 1,
+"tags": ["os","freeware","shell programming"],
+"languages": ["english","hindi","telugu"],
+"author": {
+"name": "Shiva Ramachandran",
+"callname": "Shiv",
+"profile": {
+"exp":8,
+"courses":3,
+"books":2
+}
+}
+},
+{
+"title": "Java in simple way",
+"isbn": 1122,
+"downloadable": true,
+"no_of_reviews": 2,
+"tags": ["language","freeware","programming"],
+"languages": ["english","hindi","telugu"],
+"author": {
+"name": "Karhik Ramachandran",
+"callname": "Karthik",
+"profile": {
+"exp":1,
+"courses":2,
+"books":3
+}
+}
+},
+{
+"title": "Python in simple way",
+"isbn": 1234,
+"downloadable": false,
+"no_of_reviews": 5,
+"tags": ["language","freeware","programming"],
+"languages": ["english","hindi","telugu"],
+"author": {
+"name": "Daniel IA Cohen",
+"callname": "Dan",
+"profile": {
+"exp":8,
+"courses":7,
+"books":6
+}
+}
+},
+{
+"title": "Devops in simple way",
+"isbn": 6677,
+"downloadable": false,
+"no_of_reviews": 3,
+"tags": ["jenkins","git","cicd"],
+"languages": ["english","hindi","telugu"],
+"author": {
+"name": "Dhoni Chandra",
+"callname": "Dhoni",
+"profile": {
+"exp":4,
+"courses":4,
+"books":4
+}
+}
+},
+{
+"title": "MongoDB in simple way",
+"isbn": 6677,
+"downloadable": true,
+"no_of_reviews": 4,
+"tags": ["database","cloud","nosql"],
+"languages": ["english","hindi","telugu"],
+"author": {
+"name": "Sachin Tendulkar",
+"callname": "Sachin",
+"profile": {
+"exp":6,
+"courses":7,
+"books":8
+}
+}
+},
+{
+"title": "Oracle in simple way",
+"isbn": 6677,
+"downloadable": true,
+"no_of_reviews": 3,
+"tags": ["database","sql","relational"],
+"languages": ["english","hindi","telugu"],
+"author": {
+"name": "Virat Kohli",
+"callname": "kohli",
+"profile": {
+"exp":2,
+"courses":2,
+"books":2
+}
+}
+},
+{
+"title": "Shell Scripting in simple way",
+"isbn": 9988,
+"downloadable": true,
+"no_of_reviews": 1,
+"tags": ["programming"],
+"languages": ["english","hindi","tamil"],
+"author": {
+"name": "Rama Ramachandran",
+"callname": "Rama",
+"profile": {
+"exp":8,
+"courses":3,
+"books":2
+}
+}
+}
+]
+-- get all the records with database in tags 
+SELECT * FROM c WHERE ARRAY_CONTAINS(c.tags, 'database')
+
+-- get all the documents with author having exactly 2 courses
+
+SELECT * FROM c WHERE c.author.profile.courses = 2
+
+-- get all the documents with tags exactly matching 'language','freeware','programming'
+SELECT * FROM c WHERE c.tags = ['language','freeware','programming']
+
+-- get all the records with programming in tags 
+SELECT * FROM c WHERE ARRAY_CONTAINS(c.tags, 'programming')
+
+-- get all the documents with telugu in languages
+SELECT * FROM c WHERE ARRAY_CONTAINS(c.languages, 'telugu')
+
+-- get count of total number of documents
+SELECT VALUE COUNT(1) FROM c
+
+-- get first document
+SELECT top 1 * FROM c
+
+-- get documents with no of reviews>3 or tags contains programming
+SELECT * FROM c WHERE c.no_of_reviews>3 and ARRAY_CONTAINS(c.tags, 'programming')
+
+-- get documents with no of reviews<3 or downloadable is true or author profile contains 2 books
+SELECT * FROM c WHERE c.no_of_reviews<3 or c.author.profile.books=2 or c.downloadable=true
+-- get documents with no of reviews is not 3
+SELECT * FROM c WHERE c.no_of_reviews<>3
+
+-- get all the records with database, programming in tags 
+SELECT * FROM c WHERE ARRAY_CONTAINS(c.tags, 'database') AND ARRAY_CONTAINS(c.tags, 'programming')
